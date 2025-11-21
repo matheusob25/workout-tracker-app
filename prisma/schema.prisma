@@ -1,92 +1,83 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = env("DATABASE_URL")
 }
 
-model User{
-  id Int @id @default(autoincrement())
-  firstName String 
-  lastName String
-  email String
-  hash String 
+model User {
+  id            Int            @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  email         String
+  hash          String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   trainingPlans TrainingPlan[]
-  workouts Workout[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  workouts      Workout[]
 }
 
-model TrainingPlan{
-  id Int @id @default(autoincrement())
-  userId Int
-  user User @relation(fields: [userId], references: [id])
-  name String
-  startDate DateTime
-  endDate DateTime
+model TrainingPlan {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  name        String
+  startDate   DateTime
+  endDate     DateTime
   description String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  workouts Workout[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  user        User      @relation(fields: [userId], references: [id])
+  workouts    Workout[]
 }
 
-model Workout{
-  id Int @id @default(autoincrement())
-  trainingPlanId Int
-  TrainingPlan TrainingPlan @relation(fields: [trainingPlanId], references: [id])
-  userId Int
-  user User @relation(fields: [userId], references: [id])
-  name String
-  description String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Workout {
+  id               Int               @id @default(autoincrement())
+  trainingPlanId   Int
+  userId           Int
+  name             String
+  description      String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  TrainingPlan     TrainingPlan      @relation(fields: [trainingPlanId], references: [id])
+  user             User              @relation(fields: [userId], references: [id])
   workoutExercises WorkoutExercise[]
 }
 
-model Exercise{
-  id Int @id @default(autoincrement())
-  name String
-  targetMuscle String
-  description String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  workoutExercises  WorkoutExercise[]
+model Exercise {
+  id               Int               @id @default(autoincrement())
+  name             String
+  targetMuscle     String
+  description      String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  workoutExercises WorkoutExercise[]
 }
 
-model WorkoutExercise{
-  id Int @id @default(autoincrement())
-  exerciseId Int
-  exercise Exercise @relation(fields: [exerciseId], references: [id])
-  workoutId Int
-  workout Workout @relation(fields: [workoutId], references: [id])
-  targetSets Int
+model WorkoutExercise {
+  id            Int           @id @default(autoincrement())
+  exerciseId    Int
+  workoutId     Int
+  targetSets    Int
   minTargetReps Int
   maxTargetReps Int
-  order Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
+  order         Int
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  exerciseLogs  ExerciseLog[]
+  exercise      Exercise      @relation(fields: [exerciseId], references: [id])
+  workout       Workout       @relation(fields: [workoutId], references: [id])
 }
 
-model ExerciseLog{
-  id Int @id @default(autoincrement())
+model ExerciseLog {
+  id                Int             @id @default(autoincrement())
   workoutExerciseId Int
-  workoutExercise WorkoutExercise @relation(fields: [workoutExerciseId], references: [id])
-  date Date
-  setNumber Int
-  weight double
-  reps double
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  date              DateTime
+  setNumber         Int
+  weight            Float
+  reps              Float
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  workoutExercise   WorkoutExercise @relation(fields: [workoutExerciseId], references: [id])
 }
