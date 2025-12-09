@@ -9,6 +9,6 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: workoutTracker
     networks:
-      - freecodecamp
+      - devNetwork
 networks:
-  freecodecamp:
+  devNetwork:
