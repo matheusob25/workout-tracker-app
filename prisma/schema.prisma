@@ -10,13 +10,16 @@ datasource db {
 model User {
   id            Int            @id @default(autoincrement())
   firstName     String
-  lastName      String
-  email         String
+  lastName      String? 
+  email         String         @unique
   hash          String
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   trainingPlans TrainingPlan[]
   workouts      Workout[]
+
+  @@map("users")
+
 }
 
 model TrainingPlan {
@@ -30,6 +33,9 @@ model TrainingPlan {
   updatedAt   DateTime  @updatedAt
   user        User      @relation(fields: [userId], references: [id])
   workouts    Workout[]
+
+ @@map("trainingPlans")
+
 }
 
 model Workout {
@@ -43,6 +49,8 @@ model Workout {
   TrainingPlan     TrainingPlan      @relation(fields: [trainingPlanId], references: [id])
   user             User              @relation(fields: [userId], references: [id])
   workoutExercises WorkoutExercise[]
+
+ @@map("workouts")
 }
 
 model Exercise {
@@ -53,6 +61,8 @@ model Exercise {
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   workoutExercises WorkoutExercise[]
+
+  @@map("exercises")
 }
 
 model WorkoutExercise {
@@ -68,6 +78,8 @@ model WorkoutExercise {
   exerciseLogs  ExerciseLog[]
   exercise      Exercise      @relation(fields: [exerciseId], references: [id])
   workout       Workout       @relation(fields: [workoutId], references: [id])
+
+  @@map("workoutExercises")
 }
 
 model ExerciseLog {
@@ -80,4 +92,6 @@ model ExerciseLog {
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   workoutExercise   WorkoutExercise @relation(fields: [workoutExerciseId], references: [id])
+
+  @@map("exerciseLogs")
 }
