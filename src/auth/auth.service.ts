@@ -21,8 +21,8 @@ export class AuthService{
 
         if(!pwMatches) throw new ForbiddenException("Credenciais incorretas!");
     
-        delete user.hash;
-        return user;
+        const {hash, ...userNoHash} = user
+        return userNoHash;
     }
 
     async signup(dto: AuthDto){
