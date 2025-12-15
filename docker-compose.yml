@@ -8,6 +8,6 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: workoutTracker
     networks:
-      - devNetwork
+      - myNetwork
 networks:
-  devNetwork:
+  myNetwork:
