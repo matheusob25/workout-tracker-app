@@ -3,9 +3,10 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { AuthDto, LoginDto } from "./dto";
 import * as argon from 'argon2';
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { JwtService } from "@nestjs/jwt";
 @Injectable()
 export class AuthService{
-    constructor(private prisma: PrismaService){
+    constructor(private prisma: PrismaService, private jwt: JwtService){
 
     }
 
