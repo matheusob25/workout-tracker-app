@@ -7,13 +7,8 @@ import { ConfigService } from "@nestjs/config";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 @Injectable()
 export class AuthService{
-<<<<<<< HEAD
-    constructor(private prisma: PrismaService){
-        
-=======
     constructor(private prisma: PrismaService, private jwt: JwtService, private config: ConfigService){
 
->>>>>>> af41e382ef5bed0d06b6ff51fb5dab5cd3d66101
     }
 
     async signin(dto: LoginDto){
@@ -28,13 +23,8 @@ export class AuthService{
 
         if(!pwMatches) throw new ForbiddenException("Credenciais incorretas!");
     
-<<<<<<< HEAD
-        const {hash, ...userNoHash} = user;
-        return userNoHash;
-=======
 
         return this.signToken(user.id, user.email);
->>>>>>> af41e382ef5bed0d06b6ff51fb5dab5cd3d66101
     }
 
     async signup(dto: AuthDto){
