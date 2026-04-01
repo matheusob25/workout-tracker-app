@@ -4,24 +4,24 @@ import { IsEmail, isNotEmpty, IsNotEmpty, IsString } from "class-validator";
 export class AuthDto{
     @IsEmail()
     @IsNotEmpty()
-    email: string;
+    email!: string;
     @IsString()
     @IsNotEmpty()
-    firstName: string;
+    firstName!: string;
     @IsString()
-    lastName: string;
+    lastName!: string;
     @IsString()
     @IsNotEmpty()
-    password: string;
+    password!: string;
 }
 
 
 export class LoginDto{
     @IsEmail()
     @IsNotEmpty()
-    email: string;
+    email!: string;
     @IsString()
     @IsNotEmpty()
-    password: string;
+    password!: string;
 
 }

@@ -1,6 +1,6 @@
 export class User{
-    id: bigint;
-    name: string;
-    emai:string;
+    id!: bigint;
+    name!: string;
+    emai!:string;
 
 }
