@@ -1,4 +1,3 @@
-import { Optional } from "@nestjs/common";
 import { IsEmail, isNotEmpty, IsNotEmpty, IsString } from "class-validator";
 
 export class AuthDto{
