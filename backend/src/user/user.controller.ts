@@ -6,8 +6,8 @@ export class UserController {
     constructor(private user: UserService){}
 
     @Get('/users')
-    findAll(){
-        return 'all users'
+    async findAll(){
+        return await this.user.findAll();
     }
 
     @Get(':id')
